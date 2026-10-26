@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "side-tab",
+        "value": "*",
+        "files": [
+          "cyber-ui/public/style.css"
+        ],
+        "createdAt": "2026-10-26T11:30:10.528Z",
+        "reason": "Claude: blockquote border-left uses neutral --border token, matching adjacent hr/table borders; a conventional markdown blockquote affordance, not a card accent border"
+      }
+    ]
+  }
+}

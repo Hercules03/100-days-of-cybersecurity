@@ -4,24 +4,29 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Cyber Study — 100 Days of Cybersecurity</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2016%2016'%3E%3Crect%20width='16'%20height='16'%20rx='3'%20fill='%2316171b'/%3E%3Cpath%20d='M13%206a4%204%200%200%200-8%200v2H3v6a1%201%200%200%200%201%201h8a1%201%200%200%200%201-1V8H11V6ZM7%206a2%202%200%200%201%204%200v2H7V6Z'%20fill='none'%20stroke='%23d98a4a'%20stroke-width='1.4'%20stroke-linecap='round'%20stroke-linejoin='round'/%3E%3C/svg%3E">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header class="topbar">
-    <div class="brand">🔐 <span>Cyber Study</span></div>
+    <button id="side-toggle" class="btn ghost" title="Collapse sidebar" aria-label="Collapse sidebar" aria-pressed="false"><svg class="icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 3v10a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1h-9a1 1 0 0 0-1 1Z"/><path d="M7 2.5v11"/></svg></button>
+    <div class="brand">
+      <svg class="icon brand-icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M13 6a4 4 0 0 0-8 0v2H3v6a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V8H11V6ZM7 6a2 2 0 0 1 4 0v2H7V6Z"/></svg>
+      <span>Cyber Study</span>
+    </div>
     <div id="quickstart" class="quickstart"></div>
   </header>
 
   <aside class="sidebar">
-    <div class="side-title">📚 Materials</div>
+    <div class="side-title">Materials</div>
     <div id="tree" class="tree"></div>
   </aside>
 
   <main class="main">
     <nav class="tabs">
-      <button id="tab-study" class="tab active">📖 Study</button>
-      <button id="tab-calendar" class="tab">📅 Progress</button>
-      <button id="tab-dashboard" class="tab">📊 Dashboard</button>
+      <button id="tab-study" class="tab active"><svg class="icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 2h6l2 2h2a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1Z"/></svg> Study</button>
+      <button id="tab-calendar" class="tab"><svg class="icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M11 1v2M5 1v2M1.5 5h13V4a1 1 0 0 0-1-1h-1v1H9V3H5v1H3.5V3h-1a1 1 0 0 0-1 1v1ZM2 6v8a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V6H2Z"/></svg> Progress</button>
+      <button id="tab-dashboard" class="tab"><svg class="icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 13h12M4 13V8M8 13V4M12 13v-6"/></svg> Dashboard</button>
     </nav>
 
     <section id="view-study" class="panel">
@@ -32,32 +37,37 @@
 
     <section id="view-calendar" class="panel hidden">
       <div class="cal-head">
-        <button id="cal-prev" class="btn ghost" title="Previous month">‹</button>
+        <button id="cal-prev" class="btn ghost" title="Previous month" aria-label="Previous month"><svg class="icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3 5 8l5 5"/></svg></button>
         <div id="cal-label" class="cal-label"></div>
-        <button id="cal-next" class="btn ghost" title="Next month">›</button>
+        <button id="cal-next" class="btn ghost" title="Next month" aria-label="Next month"><svg class="icon" viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5"/></svg></button>
         <button id="cal-today" class="btn ghost">Today</button>
       </div>
       <div id="cal-grid" class="cal-grid"></div>
+      <div class="cal-legend">
+        <span class="lg"><i class="sw today-sw"></i> Today</span>
+        <span class="lg"><i class="sw active-sw"></i> In progress</span>
+        <span class="lg"><i class="sw done-sw"></i> Completed</span>
+      </div>
       <div id="day-detail" class="day-detail"></div>
     </section>
 
     <section id="view-dashboard" class="panel hidden">
       <div class="dash-stats">
-        <div class="stat-tile">
+        <div class="stat">
           <div class="stat-value" id="stat-done">0</div>
-          <div class="stat-label">Days completed</div>
+          <div class="stat-label">days completed</div>
         </div>
-        <div class="stat-tile">
+        <div class="stat">
           <div class="stat-value" id="stat-streak">0</div>
-          <div class="stat-label">Day streak</div>
+          <div class="stat-label">day streak</div>
         </div>
-        <div class="stat-tile">
+        <div class="stat">
           <div class="stat-value" id="stat-time">0m</div>
-          <div class="stat-label">Total study time</div>
+          <div class="stat-label">study time</div>
         </div>
-        <div class="stat-tile">
+        <div class="stat">
           <div class="stat-value" id="stat-active">0</div>
-          <div class="stat-label">In progress</div>
+          <div class="stat-label">in progress</div>
         </div>
       </div>
 
@@ -66,7 +76,7 @@
           <span class="dash-title">Overall progress</span>
           <span class="dash-meta" id="overall-meta">0 / 100</span>
         </div>
-        <div class="bar"><div class="bar-fill" id="overall-bar" style="width:0%"></div></div>
+        <div class="bar"><div class="bar-fill orange" id="overall-bar" style="width:0%"></div></div>
       </div>
 
       <div class="dash-card">

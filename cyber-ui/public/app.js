@@ -21,6 +21,22 @@ const esc = (s) =>
     '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
   }[c]));
 
+// Single-weight stroke icon set (16px, 1.4 stroke) — replaces all emoji/glyphs.
+const ICON_PATHS = {
+  folder: '<path d="M2 4.5a1 1 0 0 1 1-1h2.6l1.6 2H13a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-7Z"/>',
+  lab: '<path d="M6 2v3.3L3.2 9.6A1.6 1.6 0 0 0 4.6 12h6.8a1.6 1.6 0 0 0 1.4-2.4L10 5.3V2M6 2h4M6.5 8h3M3 9h10"/>',
+  doc: '<path d="M4 2h5.2L12 4.7V13a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1Z"/><path d="M9 2v3h3M6.5 8.5h3M6.5 11h3"/>',
+  code: '<path d="m6 4-4 4 4 4M10 4l4 4-4 4"/>',
+  chev: '<path d="m6 4 4 4-4 4"/>',
+  play: '<path d="M6 3.8v8.4L12 8 6 3.8Z"/>',
+  check: '<path d="m3.5 8.5 3 3 6-6.5"/>',
+  trash: '<path d="M3.5 4.5h9M6 4.5V2.5h4v2M4.5 4.5l.8 8a1 1 0 0 0 1 .93h3.4a1 1 0 0 0 1-.93l.8-8M6.7 7v4M9.3 7v4"/>',
+  save: '<path d="M2.5 9v3.5a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1V9M8 2.5V9M5.2 6.2 8 9l2.8-2.8"/>',
+};
+function icon(name, cls) {
+  return `<svg class="icon ${cls || ''}" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICON_PATHS[name]}</svg>`;
+}
+
 async function api(pathname, opts) {
   const res = await fetch(pathname, opts);
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -52,12 +68,23 @@ function fmtTime(iso) {
 }
 
 function nextLessonNum() {
+  // "Up next" advances only when a session is finished (check-out), so an
+  // unfinished session stays in front of the learner instead of jumping ahead.
   const done = new Set();
   for (const k in state.progress.days) {
-    const n = Number(state.progress.days[k]?.lesson);
-    if (n >= 1 && n <= 100) done.add(n);
+    const e = state.progress.days[k];
+    const n = Number(e?.lesson);
+    if (e?.checkOut && n >= 1 && n <= 100) done.add(n);
   }
   for (let n = 1; n <= 100; n++) if (!done.has(n)) return n;
+  return null;
+}
+
+function findInProgress(lessonNum) {
+  for (const k in state.progress.days) {
+    const e = state.progress.days[k];
+    if (e && e.checkIn && !e.checkOut && Number(e.lesson) === lessonNum) return k;
+  }
   return null;
 }
 
@@ -81,8 +108,8 @@ function renderTree(node) {
     if (child.type === 'dir') {
       const btn = document.createElement('button');
       btn.className = 'tree-dir';
-      const icon = child.name.toLowerCase() === 'lab' ? '🧪' : '📁';
-      btn.innerHTML = `<span class="tw">▾</span> ${icon} ${esc(child.name)}`;
+      const dirIcon = child.name.toLowerCase() === 'lab' ? icon('lab') : icon('folder');
+      btn.innerHTML = `<span class="tw">▾</span> ${dirIcon} ${esc(child.name)}`;
       const sub = renderTree(child);
       sub.classList.add('sub');
       btn.addEventListener('click', () => {
@@ -94,7 +121,7 @@ function renderTree(node) {
       const b = document.createElement('button');
       const isMd = child.path.endsWith('.md');
       b.className = 'tree-file' + (isMd ? '' : ' code');
-      b.textContent = (isMd ? '📄 ' : '🐍 ') + child.name;
+      b.innerHTML = `${isMd ? icon('doc') : icon('code')} ${esc(child.name)}`;
       b.title = child.path;
       b.addEventListener('click', () => openFile(child.path));
       li.appendChild(b);
@@ -119,11 +146,11 @@ async function openFile(relPath) {
 function renderViewer(relPath, content) {
   if (relPath.endsWith('.md')) {
     $('#viewer').innerHTML =
-      `<div class="viewer-head">📄 ${esc(relPath)}</div>` +
+      `<div class="viewer-head">${icon('doc')} ${esc(relPath)}</div>` +
       `<div class="markdown">${renderMarkdown(content)}</div>`;
   } else {
     $('#viewer').innerHTML =
-      `<div class="viewer-head">🐍 ${esc(relPath)}</div>` +
+      `<div class="viewer-head">${icon('code')} ${esc(relPath)}</div>` +
       `<pre class="code">${esc(content)}</pre>`;
   }
 }
@@ -137,12 +164,12 @@ function basename(p) {
   return p ? p.split('/').pop() : '';
 }
 
-// 🧪 buttons to open a lesson's Lab files (may include .md, .py, etc.).
+// Lab buttons to open a lesson's Lab files (may include .md, .py, etc.).
 function labButtons(lesson, cls) {
   const labs = lesson?.lab || [];
   if (!labs.length) return '';
   return labs
-    .map((p, i) => `<button class="btn ghost ${cls}-lab" data-idx="${i}" title="${esc(p)}">🧪 ${esc(basename(p))}</button>`)
+    .map((p, i) => `<button class="btn ghost ${cls}-lab" data-idx="${i}" title="${esc(p)}">${icon('lab')} ${esc(basename(p))}</button>`)
     .join('');
 }
 
@@ -193,14 +220,41 @@ function renderCalendar() {
     if (key === state.selectedDay) cls += ' selected';
     if (s) cls += s.checkOut ? ' done' : s.checkIn ? ' active' : '';
     cell.className = cls;
+    cell.setAttribute('role', 'button');
+    cell.setAttribute('tabindex', '0');
+    cell.setAttribute('aria-pressed', key === state.selectedDay ? 'true' : 'false');
+    const topic = lessonForDay(Number(s?.lesson))?.topic || '';
+    const status = s?.checkOut ? 'Completed' : s?.checkIn ? 'In progress' : 'No session';
+    cell.title = topic ? `Day ${s.lesson}: ${topic} — ${status}` : status;
     cell.innerHTML = `<span class="daynum">${d}</span>` + (s?.lesson ? `<span class="lbl">D${s.lesson}</span>` : '');
-    cell.addEventListener('click', () => {
+    const select = () => {
       state.selectedDay = key;
       renderCalendar();
       renderDayDetail();
+    };
+    cell.addEventListener('click', select);
+    cell.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); select(); }
     });
     grid.appendChild(cell);
   }
+}
+
+function flushNote() {
+  const ta = document.getElementById('dd-note');
+  if (!ta || !state.selectedDay) return;
+  const existing = state.progress.days[state.selectedDay];
+  if (existing || ta.value) {
+    const entry = existing || (state.progress.days[state.selectedDay] = {});
+    entry.note = ta.value;
+  }
+}
+
+function setFeedback(msg, ok) {
+  const fb = document.getElementById('dd-feedback');
+  if (!fb) return;
+  fb.textContent = msg;
+  fb.className = 'dd-feedback' + (ok ? ' ok' : ' err');
 }
 
 function renderDayDetail() {
@@ -214,12 +268,15 @@ function renderDayDetail() {
   const s = state.progress.days[key] || {};
   const lessonNum = Number(s.lesson) || nextLessonNum() || 1;
   const lesson = lessonForDay(lessonNum);
+  const src = lessonSource(lesson);
   const date = new Date(key + 'T00:00:00');
 
   let status;
   if (s.checkIn && s.checkOut) status = `Studied ${mins(s.checkIn, s.checkOut)} min`;
   else if (s.checkIn) status = `In progress since ${fmtTime(s.checkIn)}`;
   else status = 'No session logged yet';
+
+  const hasSession = !!(s.checkIn || s.checkOut || s.lesson || s.note);
 
   el.innerHTML = `
     <div class="dd-head">
@@ -234,52 +291,67 @@ function renderDayDetail() {
     <div class="dd-topic">Day ${lessonNum} — ${esc(lesson?.topic || 'Self-directed study')}</div>
     ${lesson?.objective ? `<div class="dd-obj">${esc(lesson.objective)}</div>` : ''}
     <div class="dd-row actions">
-      <button class="btn primary" id="dd-in" ${s.checkIn ? 'disabled' : ''}>▶ Check in</button>
-      <button class="btn" id="dd-out" ${!s.checkIn || s.checkOut ? 'disabled' : ''}>■ Check out</button>
-      ${lesson?.content ? `<button class="btn ghost" id="dd-open">📄 Open lesson</button>` : ''}
+      ${!s.checkIn ? `<button class="btn primary" id="dd-in">${icon('play')} Start session</button>` : ''}
+      ${s.checkIn && !s.checkOut ? `<button class="btn primary" id="dd-out">${icon('check')} Finish</button>` : ''}
+      ${src ? `<button class="btn ghost" id="dd-open">${icon('doc')} Open lesson</button>` : ''}
       ${labButtons(lesson, 'dd')}
-      <button class="btn danger" id="dd-del">🗑 Delete</button>
+      ${hasSession ? `<button class="btn danger" id="dd-del">${icon('trash')} Delete</button>` : ''}
     </div>
     <label class="dd-note">What did you learn?
       <textarea id="dd-note" rows="4" placeholder="Notes, commands, takeaways…">${esc(s.note || '')}</textarea>
     </label>
     <div class="dd-actions2">
-      <button class="btn" id="dd-save-note">💾 Save note</button>
+      <button class="btn" id="dd-save-note">${icon('save')} Save note</button>
     </div>
+    <div class="dd-feedback" id="dd-feedback" role="status"></div>
   `;
 
-  $('#dd-in').addEventListener('click', () => {
+  const persist = (okMsg) =>
+    saveProgress()
+      .then(() => { renderCalendar(); renderDayDetail(); renderQuickStart(); setFeedback(okMsg, true); })
+      .catch(() => setFeedback('Could not save — is the server running?', false));
+
+  const inBtn = $('#dd-in');
+  if (inBtn) inBtn.addEventListener('click', () => {
+    flushNote();
     const entry = state.progress.days[key] || (state.progress.days[key] = {});
     entry.lesson = clamp(parseInt($('#dd-lesson').value, 10), 1, 100);
     if (!entry.checkIn) entry.checkIn = new Date().toISOString();
-    saveProgress().then(() => { renderCalendar(); renderDayDetail(); renderQuickStart(); });
+    persist('Session started');
   });
 
-  $('#dd-out').addEventListener('click', () => {
+  const outBtn = $('#dd-out');
+  if (outBtn) outBtn.addEventListener('click', () => {
+    flushNote();
     const entry = state.progress.days[key];
-    if (entry && entry.checkIn && !entry.checkOut) {
+    if (entry) {
+      entry.lesson = clamp(parseInt($('#dd-lesson').value, 10), 1, 100);
+      if (!entry.checkIn) entry.checkIn = new Date().toISOString();
       entry.checkOut = new Date().toISOString();
-      saveProgress().then(() => { renderCalendar(); renderDayDetail(); renderQuickStart(); });
     }
+    persist('Session logged');
   });
 
-  $('#dd-del').addEventListener('click', () => {
-    if (!confirm('Delete this session log?')) return;
+  const delBtn = $('#dd-del');
+  if (delBtn) delBtn.addEventListener('click', () => {
+    const lose = s.note ? ' It also deletes your note.' : '';
+    if (!confirm(`Remove the study session for ${date.toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}?${lose}`)) return;
     delete state.progress.days[key];
-    saveProgress().then(() => { renderCalendar(); renderDayDetail(); renderQuickStart(); });
+    persist('Session removed');
   });
 
   const openBtn = $('#dd-open');
-  if (openBtn) openBtn.addEventListener('click', () => openFile(lessonSource(lesson)));
+  if (openBtn) openBtn.addEventListener('click', () => openFile(src));
 
   document.querySelectorAll('.dd-lab').forEach((b) => {
     b.addEventListener('click', () => openFile(lesson.lab[Number(b.dataset.idx)]));
   });
 
   $('#dd-save-note').addEventListener('click', () => {
-    const entry = state.progress.days[key] || (state.progress.days[key] = {});
-    entry.note = $('#dd-note').value;
-    saveProgress().then(() => renderDayDetail());
+    flushNote();
+    saveProgress()
+      .then(() => setFeedback('Note saved', true))
+      .catch(() => setFeedback('Could not save — is the server running?', false));
   });
 }
 
@@ -288,22 +360,22 @@ function renderQuickStart() {
   const el = $('#quickstart');
   const n = nextLessonNum();
   if (!n) {
-    el.innerHTML = '<div class="qs-done">🎉 All 100 days logged — you rock!</div>';
+    el.innerHTML = '<div class="qs-done">All 100 days logged — nice work.</div>';
     return;
   }
   const lesson = lessonForDay(n);
   const src = lessonSource(lesson);
+  const inProg = findInProgress(n);
   el.innerHTML = `
     <div class="qs-body">
-      <div class="qs-label">UP NEXT</div>
-      <div class="qs-main">Day ${n} — ${esc(lesson?.topic || 'Self-directed study')}</div>
+      <div class="qs-main">Day ${n} — ${esc(lesson?.topic || 'Self-directed study')}${inProg ? ' · in progress' : ''}</div>
     </div>
     <div class="qs-actions">
-      <button class="btn primary" id="qs-start">▶ Start Day ${n}</button>
-      ${src ? `<button class="btn ghost" id="qs-open" title="${esc(src)}">📄</button>` : ''}
+      <button class="btn primary" id="qs-main">${inProg ? icon('check') + ' Finish' : icon('play') + ' Start'} Day ${n}</button>
+      ${src ? `<button class="btn ghost" id="qs-open" aria-label="Open today's lesson" title="${esc(src)}">${icon('doc')}</button>` : ''}
       ${labButtons(lesson, 'qs')}
     </div>`;
-  $('#qs-start').addEventListener('click', () => startLesson(n));
+  $('#qs-main').addEventListener('click', () => (inProg ? finishLesson(inProg) : startLesson(n)));
   const o = $('#qs-open');
   if (o) o.addEventListener('click', () => openFile(src));
   document.querySelectorAll('.qs-lab').forEach((b) => {
@@ -313,25 +385,40 @@ function renderQuickStart() {
 
 function startLesson(n) {
   const key = dateKey(new Date());
+  flushNote();
   const entry = state.progress.days[key] || (state.progress.days[key] = {});
   if (!entry.lesson) entry.lesson = n;
   if (!entry.checkIn) entry.checkIn = new Date().toISOString();
   state.selectedDay = key;
   state.month = new Date();
+  const src = lessonSource(lessonForDay(n));
   saveProgress().then(() => {
-    switchTab('calendar');
     renderCalendar();
     renderDayDetail();
     renderQuickStart();
-  });
+    if (src) openFile(src);
+    else switchTab('calendar');
+  }).catch(() => setFeedback('Could not save — is the server running?', false));
+}
+
+function finishLesson(key) {
+  const entry = state.progress.days[key];
+  if (!entry) return;
+  entry.checkOut = new Date().toISOString();
+  state.selectedDay = key;
+  const d = new Date(key + 'T00:00:00');
+  state.month = new Date(d.getFullYear(), d.getMonth(), 1);
+  saveProgress()
+    .then(() => { switchTab('calendar'); renderCalendar(); renderDayDetail(); renderQuickStart(); setFeedback('Session logged', true); })
+    .catch(() => setFeedback('Could not save — is the server running?', false));
 }
 
 // ---------- Dashboard ----------
 const PHASES = [
-  { name: 'Phase 1', color: '#3987e5' },
-  { name: 'Phase 2', color: '#d95926' },
-  { name: 'Phase 3', color: '#199e70' },
-  { name: 'Phase 4', color: '#c98500' },
+  { name: 'Phase 1', color: '#6f7f96' },
+  { name: 'Phase 2', color: '#a86a4f' },
+  { name: 'Phase 3', color: '#6f9d84' },
+  { name: 'Phase 4', color: '#a8864a' },
 ];
 
 function computeStreak(days) {
@@ -422,8 +509,28 @@ function renderDashboard() {
   }
 }
 
+// ---------- Sidebar toggle ----------
+const SIDE_KEY = 'cyber-ui.side-collapsed';
+function setSideCollapsed(collapsed) {
+  document.body.classList.toggle('side-collapsed', collapsed);
+  const btn = $('#side-toggle');
+  if (btn) {
+    btn.setAttribute('aria-pressed', collapsed ? 'true' : 'false');
+    btn.setAttribute('aria-label', collapsed ? 'Expand sidebar' : 'Collapse sidebar');
+    btn.title = collapsed ? 'Expand sidebar' : 'Collapse sidebar';
+  }
+}
+function toggleSidebar() {
+  const collapsed = document.body.classList.toggle('side-collapsed');
+  setSideCollapsed(collapsed);
+  try { localStorage.setItem(SIDE_KEY, collapsed ? '1' : '0'); } catch {}
+}
+
 // ---------- Init ----------
 async function init() {
+  try {
+    if (localStorage.getItem(SIDE_KEY) === '1') setSideCollapsed(true);
+  } catch {}
   const [lessons, prog, tree] = await Promise.all([
     (await fetch('lessons.json')).json(),
     api('/api/progress'),
@@ -451,6 +558,7 @@ async function init() {
   $('#tab-study').addEventListener('click', () => switchTab('study'));
   $('#tab-calendar').addEventListener('click', () => switchTab('calendar'));
   $('#tab-dashboard').addEventListener('click', () => switchTab('dashboard'));
+  $('#side-toggle').addEventListener('click', toggleSidebar);
   $('#cal-prev').addEventListener('click', () => {
     state.month = new Date(state.month.getFullYear(), state.month.getMonth() - 1, 1);
     renderCalendar();
@@ -470,4 +578,10 @@ async function init() {
   renderDashboard();
 }
 
-init();
+init().catch(() => {
+  const el = $('#viewer');
+  if (el) {
+    el.innerHTML = '<p class="muted">Couldn\'t load your study data — is the server running? Start it with <code>cd cyber-ui && npm start</code>.</p>';
+  }
+  $('#quickstart').innerHTML = '';
+});
