@@ -1,0 +1,489 @@
+[
+  {
+    "day": 1,
+    "topic": "Introduction to Ethical Hacking and Cybersecurity",
+    "objective": "Understand legal and ethical hacking practices",
+    "phase": "Phase 1",
+    "source": "PHASE-1/README.md",
+    "content": "PHASE-1/Day_1/Day_1.md",
+    "lab": [
+      "PHASE-1/Day_1/Lab/scoped_scanner.py"
+    ]
+  },
+  {
+    "day": 2,
+    "topic": "Networking Basics",
+    "objective": "Learn TCP/IP, DNS, HTTP, and common protocols",
+    "phase": "Phase 1",
+    "source": "PHASE-1/README.md"
+  },
+  {
+    "day": 3,
+    "topic": "Operating System Fundamentals",
+    "objective": "Explore Linux and Windows for cybersecurity",
+    "phase": "Phase 1",
+    "source": "PHASE-1/README.md"
+  },
+  {
+    "day": 4,
+    "topic": "Virtualization and Lab Setup",
+    "objective": "Set up a virtual lab with VirtualBox, Kali Linux, Metasploitable",
+    "phase": "Phase 1",
+    "source": "Lab Setup/README.md"
+  },
+  {
+    "day": 5,
+    "topic": "Basic Commands for Linux/Windows",
+    "objective": "Learn Linux & Windows commands: navigation, networking, services, sys-admin, file-system",
+    "phase": "Phase 1",
+    "source": "PHASE-1/README.md"
+  },
+  {
+    "day": 6,
+    "topic": "Basics of Cryptography",
+    "objective": "Learn hashing, encryption, and decryption techniques",
+    "phase": "Phase 1",
+    "source": "PHASE-1/README.md"
+  },
+  {
+    "day": 7,
+    "topic": "Introduction to Penetration Testing",
+    "objective": "Understand the phases of penetration testing",
+    "phase": "Phase 1",
+    "source": "PHASE-1/README.md"
+  },
+  {
+    "day": 8,
+    "topic": "Reconnaissance Techniques",
+    "objective": "Learn passive and active information gathering",
+    "phase": "Phase 1",
+    "source": "PHASE-1/README.md"
+  },
+  {
+    "day": 9,
+    "topic": "OSINT (Open-Source Intelligence) Tools",
+    "objective": "Use tools like Maltego, Recon-ng, and Shodan",
+    "phase": "Phase 1",
+    "source": "PHASE-1/README.md"
+  },
+  {
+    "day": 10,
+    "topic": "DNS Enumeration",
+    "objective": "Perform DNS zone transfers and subdomain enumeration",
+    "phase": "Phase 1",
+    "source": "PHASE-1/README.md"
+  },
+  {
+    "day": 11,
+    "topic": "Nmap for Network Scanning",
+    "objective": "Learn port scanning, service detection, and script usage",
+    "phase": "Phase 1",
+    "source": "PHASE-1/README.md"
+  },
+  {
+    "day": 12,
+    "topic": "Building an OSINT Tool",
+    "objective": "Create a Python script to scrape publicly available information",
+    "phase": "Phase 1",
+    "source": "PHASE-1/README.md"
+  },
+  {
+    "day": 13,
+    "topic": "Social Engineering Basics",
+    "objective": "Understand phishing and psychological manipulation",
+    "phase": "Phase 1",
+    "source": "PHASE-1/README.md"
+  },
+  {
+    "day": 14,
+    "topic": "Review and Practice",
+    "objective": "Consolidate information-gathering techniques",
+    "phase": "Phase 1",
+    "source": "PHASE-1/README.md"
+  },
+  {
+    "day": 15,
+    "topic": "Vulnerability Scanning Basics",
+    "objective": "Use tools like Nessus and OpenVAS",
+    "phase": "Phase 2",
+    "source": "PHASE-2/README.md"
+  },
+  {
+    "day": 16,
+    "topic": "Identifying Vulnerabilities in Applications",
+    "objective": "Analyze web apps and APIs for security gaps",
+    "phase": "Phase 2",
+    "source": "PHASE-2/README.md"
+  },
+  {
+    "day": 17,
+    "topic": "Automating Scans",
+    "objective": "Write scripts to automate vulnerability scans",
+    "phase": "Phase 2",
+    "source": "PHASE-2/README.md"
+  },
+  {
+    "day": 18,
+    "topic": "Web Server Scanning",
+    "objective": "Learn Nikto and Wappalyzer",
+    "phase": "Phase 2",
+    "source": "PHASE-2/README.md"
+  },
+  {
+    "day": 19,
+    "topic": "Patch Management",
+    "objective": "Learn about patching and update management",
+    "phase": "Phase 2",
+    "source": "PHASE-2/README.md"
+  },
+  {
+    "day": 20,
+    "topic": "Build a Custom Vulnerability Scanner",
+    "objective": "Create a Python script for basic vulnerability detection",
+    "phase": "Phase 2",
+    "source": "PHASE-2/README.md"
+  },
+  {
+    "day": 21,
+    "topic": "Review and Practice",
+    "objective": "Test and refine scanning tools",
+    "phase": "Phase 2",
+    "source": "PHASE-2/README.md"
+  },
+  {
+    "day": 22,
+    "topic": "Introduction to Web Application Security",
+    "objective": "Learn OWASP Top 10 vulnerabilities",
+    "phase": "Phase 2",
+    "source": "PHASE-2/README.md"
+  },
+  {
+    "day": 23,
+    "topic": "SQL Injection Basics",
+    "objective": "Perform basic SQL injection attacks",
+    "phase": "Phase 2",
+    "source": "PHASE-2/README.md"
+  },
+  {
+    "day": 24,
+    "topic": "Cross-Site Scripting (XSS)",
+    "objective": "Learn how to identify and exploit XSS vulnerabilities",
+    "phase": "Phase 2",
+    "source": "PHASE-2/README.md"
+  },
+  {
+    "day": 25,
+    "topic": "Directory Traversal Attacks",
+    "objective": "Exploit directory traversal vulnerabilities",
+    "phase": "Phase 2",
+    "source": "PHASE-2/README.md"
+  },
+  {
+    "day": 26,
+    "topic": "Exploiting CSRF (Cross-Site Request Forgery)",
+    "objective": "Learn about CSRF attacks and prevention techniques",
+    "phase": "Phase 2",
+    "source": "PHASE-2/README.md"
+  },
+  {
+    "day": 27,
+    "topic": "Developing a Web Scanner",
+    "objective": "Build Python tools for detecting common web vulnerabilities",
+    "phase": "Phase 2",
+    "source": "PHASE-2/README.md"
+  },
+  {
+    "day": 28,
+    "topic": "Review and Practice",
+    "objective": "Test and refine your web exploitation skills",
+    "phase": "Phase 2",
+    "source": "PHASE-2/README.md"
+  },
+  {
+    "day": 29,
+    "topic": "Wireless Network Basics",
+    "objective": "Learn Wi-Fi protocols and encryption methods",
+    "phase": "Phase 2",
+    "source": "PHASE-2/README.md"
+  },
+  {
+    "day": 30,
+    "topic": "Cracking WEP and WPA/WPA2",
+    "objective": "Use tools like Aircrack-ng to exploit Wi-Fi networks",
+    "phase": "Phase 2",
+    "source": "PHASE-2/README.md"
+  },
+  {
+    "day": 31,
+    "topic": "Man-in-the-Middle (MITM) Attacks",
+    "objective": "Set up ARP spoofing using Ettercap",
+    "phase": "Phase 2",
+    "source": "PHASE-2/README.md"
+  },
+  {
+    "day": 32,
+    "topic": "Network Sniffing",
+    "objective": "Use Wireshark for packet analysis",
+    "phase": "Phase 2",
+    "source": "PHASE-2/README.md"
+  },
+  {
+    "day": 33,
+    "topic": "Developing a Packet Sniffer",
+    "objective": "Build a Python-based packet sniffer",
+    "phase": "Phase 2",
+    "source": "PHASE-2/README.md"
+  },
+  {
+    "day": 34,
+    "topic": "Wireless Intrusion Detection",
+    "objective": "Learn techniques to detect wireless attacks",
+    "phase": "Phase 2",
+    "source": "PHASE-2/README.md"
+  },
+  {
+    "day": 35,
+    "topic": "Review and Practice",
+    "objective": "Consolidate wireless and network hacking skills",
+    "phase": "Phase 2",
+    "source": "PHASE-2/README.md"
+  },
+  {
+    "day": 36,
+    "topic": "Metasploit Basics",
+    "objective": "Use Metasploit for exploiting vulnerabilities",
+    "phase": "Phase 3",
+    "source": "PHASE-3/README.md"
+  },
+  {
+    "day": 37,
+    "topic": "Privilege Escalation in Linux",
+    "objective": "Learn and perform Linux privilege escalation techniques",
+    "phase": "Phase 3",
+    "source": "PHASE-3/README.md"
+  },
+  {
+    "day": 38,
+    "topic": "Privilege Escalation in Windows",
+    "objective": "Learn and perform Windows privilege escalation techniques",
+    "phase": "Phase 3",
+    "source": "PHASE-3/README.md"
+  },
+  {
+    "day": 39,
+    "topic": "Building Exploits",
+    "objective": "Write simple buffer overflow exploits in Python",
+    "phase": "Phase 3",
+    "source": "PHASE-3/README.md"
+  },
+  {
+    "day": 40,
+    "topic": "Reverse Shell Basics",
+    "objective": "Create and use reverse shells",
+    "phase": "Phase 3",
+    "source": "PHASE-3/README.md"
+  },
+  {
+    "day": 41,
+    "topic": "Persistence Techniques",
+    "objective": "Learn post-exploitation persistence methods",
+    "phase": "Phase 3",
+    "source": "PHASE-3/README.md"
+  },
+  {
+    "day": 42,
+    "topic": "Review and Practice",
+    "objective": "Test and refine exploitation techniques",
+    "phase": "Phase 3",
+    "source": "PHASE-3/README.md"
+  },
+  {
+    "day": 43,
+    "topic": "Introduction to Malware Analysis",
+    "objective": "Understand malware types and analysis techniques",
+    "phase": "Phase 3",
+    "source": "PHASE-3/README.md"
+  },
+  {
+    "day": 44,
+    "topic": "Static and Dynamic Analysis",
+    "objective": "Analyze malware samples with tools like Strings and Ghidra",
+    "phase": "Phase 3",
+    "source": "PHASE-3/README.md"
+  },
+  {
+    "day": 45,
+    "topic": "Building a Simple Keylogger",
+    "objective": "Develop a Python-based keylogger for ethical testing",
+    "phase": "Phase 3",
+    "source": "PHASE-3/README.md"
+  },
+  {
+    "day": 46,
+    "topic": "Anti-Forensics Techniques",
+    "objective": "Learn obfuscation and evasion tactics",
+    "phase": "Phase 3",
+    "source": "PHASE-3/README.md"
+  },
+  {
+    "day": 47,
+    "topic": "Introduction to Digital Forensics",
+    "objective": "Use tools like Autopsy and Volatility",
+    "phase": "Phase 3",
+    "source": "PHASE-3/README.md"
+  },
+  {
+    "day": 48,
+    "topic": "Malware Detection Tool",
+    "objective": "Create a Python script to detect basic malicious behaviors",
+    "phase": "Phase 3",
+    "source": "PHASE-3/README.md"
+  },
+  {
+    "day": 49,
+    "topic": "Review and Practice",
+    "objective": "Consolidate malware and forensic analysis skills",
+    "phase": "Phase 3",
+    "source": "PHASE-3/README.md"
+  },
+  {
+    "day": 51,
+    "topic": "Red Team vs Blue Team",
+    "objective": "Learn the difference and roles in security operations",
+    "phase": "Phase 4",
+    "source": "PHASE-4/README.md"
+  },
+  {
+    "day": 52,
+    "topic": "Active Directory Exploitation",
+    "objective": "Attack Active Directory environments",
+    "phase": "Phase 4",
+    "source": "PHASE-4/README.md"
+  },
+  {
+    "day": 53,
+    "topic": "Bypassing Firewalls and AV",
+    "objective": "Learn methods to bypass security mechanisms",
+    "phase": "Phase 4",
+    "source": "PHASE-4/README.md"
+  },
+  {
+    "day": 54,
+    "topic": "Developing Custom Payloads",
+    "objective": "Create payloads using MSFvenom and Python",
+    "phase": "Phase 4",
+    "source": "PHASE-4/README.md"
+  },
+  {
+    "day": 55,
+    "topic": "Data Exfiltration Techniques",
+    "objective": "Learn methods for extracting sensitive data",
+    "phase": "Phase 4",
+    "source": "PHASE-4/README.md"
+  },
+  {
+    "day": 56,
+    "topic": "Red Team Tool Development",
+    "objective": "Build a Python tool to assist in red teaming",
+    "phase": "Phase 4",
+    "source": "PHASE-4/README.md"
+  },
+  {
+    "day": 57,
+    "topic": "Review and Practice",
+    "objective": "Test and refine red team techniques",
+    "phase": "Phase 4",
+    "source": "PHASE-4/README.md"
+  },
+  {
+    "day": 58,
+    "topic": "Introduction to Incident Response",
+    "objective": "Learn steps to respond to breaches",
+    "phase": "Phase 4",
+    "source": "PHASE-4/README.md"
+  },
+  {
+    "day": 59,
+    "topic": "Log Analysis",
+    "objective": "Use tools like Splunk for log monitoring",
+    "phase": "Phase 4",
+    "source": "PHASE-4/README.md"
+  },
+  {
+    "day": 60,
+    "topic": "Threat Hunting Basics",
+    "objective": "Learn proactive threat detection methods",
+    "phase": "Phase 4",
+    "source": "PHASE-4/README.md"
+  },
+  {
+    "day": 61,
+    "topic": "Building a Threat Detection Tool",
+    "objective": "Develop a Python-based alert system",
+    "phase": "Phase 4",
+    "source": "PHASE-4/README.md"
+  },
+  {
+    "day": 62,
+    "topic": "SIEM (Security Information and Event Management)",
+    "objective": "Understand and configure a basic SIEM setup",
+    "phase": "Phase 4",
+    "source": "PHASE-4/README.md"
+  },
+  {
+    "day": 63,
+    "topic": "Defensive Coding",
+    "objective": "Write secure code to prevent common vulnerabilities",
+    "phase": "Phase 4",
+    "source": "PHASE-4/README.md"
+  },
+  {
+    "day": 64,
+    "topic": "Review and Practice",
+    "objective": "Consolidate blue team defensive skills",
+    "phase": "Phase 4",
+    "source": "PHASE-4/README.md"
+  },
+  {
+    "day": 95,
+    "topic": "Design a Full Pentesting Workflow",
+    "objective": "Combine all learned techniques into a single, cohesive workflow",
+    "phase": "Phase 4",
+    "source": "PHASE-4/README.md"
+  },
+  {
+    "day": 96,
+    "topic": "Develop a Multi-Functional Cybersecurity Tool",
+    "objective": "Create a Python tool with capabilities like scanning and exploitation",
+    "phase": "Phase 4",
+    "source": "PHASE-4/README.md"
+  },
+  {
+    "day": 97,
+    "topic": "Simulate a Real-Life Cyberattack",
+    "objective": "Perform an end-to-end attack simulation in a controlled environment",
+    "phase": "Phase 4",
+    "source": "PHASE-4/README.md"
+  },
+  {
+    "day": 98,
+    "topic": "Defensive Posture Assessment",
+    "objective": "Assess and improve a system's security posture",
+    "phase": "Phase 4",
+    "source": "PHASE-4/README.md"
+  },
+  {
+    "day": 99,
+    "topic": "Documentation and Reporting",
+    "objective": "Write a comprehensive penetration test report",
+    "phase": "Phase 4",
+    "source": "PHASE-4/README.md"
+  },
+  {
+    "day": 100,
+    "topic": "Presentation and Reflection",
+    "objective": "Present your tools and share insights gained from this journey",
+    "phase": "Phase 4",
+    "source": "PHASE-4/README.md"
+  }
+]

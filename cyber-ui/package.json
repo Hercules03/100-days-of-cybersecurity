@@ -1,0 +1,9 @@
+{
+  "name": "cyber-ui",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Local web UI for studying the 100-days-of-cybersecurity curriculum",
+  "scripts": {
+    "start": "node server.js"
+  }
+}

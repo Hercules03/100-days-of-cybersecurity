@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cyber Study — 100 Days of Cybersecurity</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">🔐 <span>Cyber Study</span></div>
+    <div id="quickstart" class="quickstart"></div>
+  </header>
+
+  <aside class="sidebar">
+    <div class="side-title">📚 Materials</div>
+    <div id="tree" class="tree"></div>
+  </aside>
+
+  <main class="main">
+    <nav class="tabs">
+      <button id="tab-study" class="tab active">📖 Study</button>
+      <button id="tab-calendar" class="tab">📅 Progress</button>
+      <button id="tab-dashboard" class="tab">📊 Dashboard</button>
+    </nav>
+
+    <section id="view-study" class="panel">
+      <div id="viewer" class="viewer">
+        <p class="muted">Select a file from the sidebar to read it here.</p>
+      </div>
+    </section>
+
+    <section id="view-calendar" class="panel hidden">
+      <div class="cal-head">
+        <button id="cal-prev" class="btn ghost" title="Previous month">‹</button>
+        <div id="cal-label" class="cal-label"></div>
+        <button id="cal-next" class="btn ghost" title="Next month">›</button>
+        <button id="cal-today" class="btn ghost">Today</button>
+      </div>
+      <div id="cal-grid" class="cal-grid"></div>
+      <div id="day-detail" class="day-detail"></div>
+    </section>
+
+    <section id="view-dashboard" class="panel hidden">
+      <div class="dash-stats">
+        <div class="stat-tile">
+          <div class="stat-value" id="stat-done">0</div>
+          <div class="stat-label">Days completed</div>
+        </div>
+        <div class="stat-tile">
+          <div class="stat-value" id="stat-streak">0</div>
+          <div class="stat-label">Day streak</div>
+        </div>
+        <div class="stat-tile">
+          <div class="stat-value" id="stat-time">0m</div>
+          <div class="stat-label">Total study time</div>
+        </div>
+        <div class="stat-tile">
+          <div class="stat-value" id="stat-active">0</div>
+          <div class="stat-label">In progress</div>
+        </div>
+      </div>
+
+      <div class="dash-card">
+        <div class="dash-card-head">
+          <span class="dash-title">Overall progress</span>
+          <span class="dash-meta" id="overall-meta">0 / 100</span>
+        </div>
+        <div class="bar"><div class="bar-fill" id="overall-bar" style="width:0%"></div></div>
+      </div>
+
+      <div class="dash-card">
+        <div class="dash-card-head"><span class="dash-title">Phase progress</span></div>
+        <div id="phase-bars"></div>
+      </div>
+
+      <div class="dash-card">
+        <div class="dash-card-head"><span class="dash-title">Recent activity</span></div>
+        <ul id="recent-list" class="recent-list"></ul>
+      </div>
+    </section>
+  </main>
+
+  <script defer src="md.js"></script>
+  <script defer src="app.js"></script>
+</body>
+</html>
